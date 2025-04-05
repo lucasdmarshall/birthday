@@ -10,34 +10,50 @@ import { useWindowSize } from 'react-use';
 
 const Container = styled.div`
   min-height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3') center/cover no-repeat fixed;
-  padding: 1rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3') center/cover no-repeat;
+  padding: 0.5rem;
   color: #fff;
   text-align: center;
   font-family: 'Quicksand', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
 
   @media (min-width: 768px) {
     padding: 2rem;
+    background-attachment: fixed;
   }
 `;
 
 const Card = styled(motion.div)`
   background: rgba(255, 255, 255, 0.85);
   max-width: 800px;
-  width: 90%;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 20px;
+  width: 95%;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   color: #2c3e50;
   backdrop-filter: blur(10px);
+  overflow: hidden;
+
+  h2 {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
 
   @media (min-width: 768px) {
+    width: 90%;
+    margin: 2rem auto;
     padding: 3rem;
+    border-radius: 20px;
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 1.5rem 0;
+    }
   }
 `;
 
@@ -75,13 +91,19 @@ const Button = styled(motion.button)`
 `;
 
 const MapContainer = styled.div`
-  height: 300px;
+  height: 250px;
   width: 100%;
-  margin: 3rem 0;
-  border-radius: 15px;
+  margin: 2rem 0;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(231, 76, 60, 0.2);
+
+  @media (min-width: 768px) {
+    height: 300px;
+    margin: 3rem 0;
+    border-radius: 15px;
+  }
 `;
 
 const InfoSection = styled.div`
@@ -111,31 +133,63 @@ const InfoItem = styled.div`
 `;
 
 const PhotoBooth = styled(motion.div)`
-  margin: 2rem 0;
-  padding: 2rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
   background: rgba(231, 76, 60, 0.05);
-  border-radius: 20px;
+  border-radius: 15px;
   border: 1px solid rgba(231, 76, 60, 0.2);
   backdrop-filter: blur(10px);
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  @media (min-width: 768px) {
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 20px;
+
+    h3 {
+      font-size: 1.3rem;
+    }
+  }
 `;
 
 const MusicPlayer = styled(motion.div)`
-  margin: 2rem 0;
-  padding: 1.5rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
   background: rgba(231, 76, 60, 0.05);
-  border-radius: 20px;
+  border-radius: 15px;
   border: 1px solid rgba(231, 76, 60, 0.2);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
+
+  .song-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
 
   @media (min-width: 768px) {
+    margin: 2rem 0;
     padding: 2rem;
+    border-radius: 20px;
     flex-direction: row;
     justify-content: center;
     gap: 1.5rem;
+
+    .song-list {
+      gap: 1rem;
+      padding: 0;
+    }
   }
 `;
 
@@ -344,7 +398,7 @@ function App() {
           transition={{ delay: 0.3 }}
         >
           <FaMusic size={24} style={{ color: '#e74c3c' }} />
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="song-list">
             {beachSongs.map((song, index) => (
               <PlaylistItem
                 key={index}
@@ -382,13 +436,13 @@ function App() {
             onChange={handlePhotoUpload}
             style={{ marginBottom: '1.5rem' }}
           />
-          <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', padding: '1rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', padding: '0.5rem', WebkitOverflowScrolling: 'touch' }}>
             {photos.map((photo, index) => (
               <motion.img
                 key={index}
                 src={photo}
                 alt="Uploaded photo"
-                style={{ height: '120px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                style={{ height: '100px', maxWidth: '150px', objectFit: 'cover', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                 whileHover={{ scale: 1.05, rotate: '-2deg' }}
               />
             ))}
